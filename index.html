@@ -1411,7 +1411,7 @@
 
             <div id="guestList"></div>
 
-            <button type="button" class="add-guest-btn" id="addGuestBtn">+ Aggiungi accompagnato</button>
+            <button type="button" class="add-guest-btn" id="addGuestBtn">+ Aggiungi partecipante</button>
 
             <div>
               <button type="submit" class="submit-btn" id="submitBtn">
@@ -1560,7 +1560,7 @@
         card.className = 'guest-card';
         card.dataset.guestId = guestCounter;
 
-        const title = isFirst ? 'Tu' : 'Accompagnato';
+        const title = isFirst ? 'Tu' : 'Accompagnato da';
         const removeBtn = isFirst
           ? ''
           : '<button type="button" class="remove-guest-btn" aria-label="Rimuovi accompagnato" title="Rimuovi">×</button>';
