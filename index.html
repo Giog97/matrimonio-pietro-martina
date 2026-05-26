@@ -669,13 +669,35 @@
     }
 
     .iban-number {
-      /*font-family: 'Courier New', monospace;
-      font-variant-numeric: slashed-zero;*/
       font-family: 'Diphylleia', serif;
       font-size: clamp(.88rem, 2.5vw, 1.05rem);
       color: #fff;
       letter-spacing: .12em;
       word-break: break-all;
+    }
+
+    /* ── Zero barrato per distinguerlo dalla lettera O ──
+       Il barrato è solo grafico (pseudo-elemento ::after).
+       Il vero contenuto del DOM resta "0", quindi sia il
+       pulsante Copia (textContent) sia la selezione manuale
+       (Ctrl+C) copiano lo zero normale per il bonifico. */
+    .iban-number .z {
+      position: relative;
+      display: inline-block;
+    }
+
+    .iban-number .z::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 8%;
+      right: 8%;
+      height: 1.5px;
+      background: currentColor;
+      transform: rotate(-22deg);
+      border-radius: 1px;
+      pointer-events: none;
+      opacity: .9;
     }
 
     .copy-btn {
@@ -1505,6 +1527,18 @@
       document.addEventListener('keydown', e => {
         if (e.key === 'Escape') { wrap.classList.remove('open'); btn.setAttribute('aria-expanded', 'false'); }
       });
+    })();
+
+    /* ── Zeri barrati nell'IBAN (solo visivo) ──
+       Avvolge ogni "0" in <span class="z">0</span>: la barra
+       diagonale è disegnata via CSS (::after) e NON entra mai
+       negli appunti, quindi qualunque copia restituisce lo
+       zero normale, valido per il bonifico. */
+    (function () {
+      const ibanEl = document.getElementById('iban-text');
+      if (!ibanEl) return;
+      const raw = ibanEl.textContent;
+      ibanEl.innerHTML = raw.replace(/0/g, '<span class="z">0</span>');
     })();
 
     /* ── Copy IBAN ── */
