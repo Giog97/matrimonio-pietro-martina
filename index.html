@@ -1228,6 +1228,13 @@
       .rsvp-section.bg-rsvp {
         background-position: 30% 50%;
       }
+
+      /* Dopo aver premuto "Ci saro'" / "Non potro' esserci" la sezione si
+         allunga per contenere il form: il ritaglio "cover" cambia, quindi
+         riposizioniamo lo sfondo per tenere la coppia centrata. */
+      .rsvp-section.bg-rsvp.form-open {
+        background-position: 40% 50%;
+      }
     }
   </style>
 </head>
@@ -1437,7 +1444,7 @@
   </section>
 
   <!-- ══════════ SEZIONE CONFERMA / RSVP ══════════ -->
-  <section class="rsvp-section bg-rsvp" aria-labelledby="rsvp-title">
+  <section class="rsvp-section bg-rsvp" id="rsvpSection" aria-labelledby="rsvp-title">
     <span class="corner-leaf tl" aria-hidden="true">🍂</span>
     <span class="corner-leaf tr" aria-hidden="true">🍁</span>
     <span class="corner-leaf bl" aria-hidden="true">🍁</span>
@@ -1630,6 +1637,7 @@
       const yesBtn = document.getElementById('rsvpYes');
       const noBtn = document.getElementById('rsvpNo');
       const formWrap = document.getElementById('rsvpFormWrap');
+      const rsvpSection = document.getElementById('rsvpSection');
       const form = document.getElementById('rsvpForm');
       const guestList = document.getElementById('guestList');
       const addBtn = document.getElementById('addGuestBtn');
@@ -1709,6 +1717,7 @@
         initForm();
         formWrap.classList.add('open');
         formWrap.setAttribute('aria-hidden', 'false');
+        rsvpSection.classList.add('form-open');
         yesBtn.setAttribute('aria-expanded', mode === 'yes');
         noBtn.setAttribute('aria-expanded', mode === 'no');
         setTimeout(() => {
