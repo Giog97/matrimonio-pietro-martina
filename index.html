@@ -63,7 +63,9 @@
       font-family: 'Diphylleia', Georgia, serif;
       background: var(--warm-white);
       color: var(--text-dark);
-      overflow-x: hidden;
+      /* clip (non hidden): evita lo scroll orizzontale senza rompere gli
+         elementi "position: sticky" come lo sfondo della Conferma */
+      overflow-x: clip;
     }
 
     /* ─── Brittany script class ─── */
@@ -771,6 +773,13 @@
         url('img/rsvp.webp') center 50% / cover no-repeat;
     }
 
+    /* Layer di sfondo "sticky" della Conferma: attivo SOLO su telefono
+       (vedi media query in fondo). Su desktop resta nascosto e vale lo
+       sfondo "cover" della sezione qui sopra. */
+    .rsvp-sticky {
+      display: none;
+    }
+
     .rsvp-inner {
       max-width: 720px;
       margin: 0 auto;
@@ -1103,6 +1112,10 @@
       background: var(--brown-dark);
       padding: 3rem 1.5rem;
       text-align: center;
+      /* sopra lo sfondo "sticky" della Conferma, che a fine scroll potrebbe
+         sbordare di qualche pixel su questa area */
+      position: relative;
+      z-index: 2;
     }
 
     .footer-script {
@@ -1218,9 +1231,34 @@
        Su schermo verticale il ritaglio "cover" e' piu' stretto: riposiziono
        le foto per tenere i soggetti ben inquadrati. */
     @media (max-width: 560px) {
-      /* Conferma: centra la coppia (lui a sx, lei a dx) sul verticale */
+      /* Conferma su telefono: la foto e' un layer "sticky" (incollato allo
+         schermo) DIETRO al contenuto, che le scorre sopra. Cosi' la foto e'
+         sempre ben visibile e non riscala mai quando il form si apre. */
       .rsvp-section.bg-rsvp {
-        background-position: 30% 50%;
+        background: var(--section-a);
+        overflow: visible;   /* necessario affinche' lo sticky "prenda" */
+        min-height: 100vh;   /* evita che la foto sbordi sotto la sezione */
+      }
+
+      .rsvp-section.bg-rsvp .section-inner,
+      .rsvp-section.bg-rsvp .rsvp-inner {
+        position: relative;
+        z-index: 1;          /* il contenuto sta sopra la foto */
+      }
+
+      .rsvp-sticky {
+        display: block;
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        margin-bottom: -100vh;  /* non occupa spazio: il contenuto ci scorre sopra */
+        z-index: 0;
+        background:
+          linear-gradient(to bottom,
+            rgba(250, 245, 235, 0.72) 0%,
+            rgba(250, 245, 235, 0.55) 35%,
+            rgba(250, 245, 235, 0.50) 100%),
+          url('img/rsvp.webp') 30% center / cover no-repeat;
       }
     }
   </style>
@@ -1430,6 +1468,7 @@
 
   <!-- ══════════ SEZIONE CONFERMA / RSVP ══════════ -->
   <section class="rsvp-section bg-rsvp" aria-labelledby="rsvp-title">
+    <div class="rsvp-sticky" aria-hidden="true"></div>
     <span class="corner-leaf tl" aria-hidden="true">🍂</span>
     <span class="corner-leaf tr" aria-hidden="true">🍁</span>
     <span class="corner-leaf bl" aria-hidden="true">🍁</span>
