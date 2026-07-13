@@ -105,10 +105,10 @@
       inset: 0;
       background:
         linear-gradient(170deg,
-          rgba(70, 28, 8, 0.72) 0%,
-          rgba(140, 65, 15, 0.52) 45%,
-          rgba(50, 22, 10, 0.75) 100%),
-        url('https://images.unsplash.com/photo-1508615039623-a25605d2b022?w=1600&q=80') center/cover no-repeat;
+          rgba(70, 28, 8, 0.74) 0%,
+          rgba(140, 65, 15, 0.58) 45%,
+          rgba(50, 22, 10, 0.78) 100%),
+        url('img/hero.webp') center/cover no-repeat;
       z-index: 0;
     }
 
@@ -398,6 +398,21 @@
 
     .info-section.alt {
       background: var(--section-b);
+    }
+
+    /* Blocco Ricevimento: UNA sola foto continua dietro sezione info + mappa,
+       cosi' non si vede lo stacco "diviso in due". Le sezioni interne
+       diventano trasparenti e lasciano vedere la foto sottostante. */
+    .photo-ricevimento {
+      position: relative;
+      background:
+        linear-gradient(rgba(250, 245, 235, 0.84), rgba(250, 245, 235, 0.84)),
+        url('img/ricevimento.webp') center 26% / cover no-repeat;
+    }
+
+    .photo-ricevimento .info-section.alt,
+    .photo-ricevimento .map-section.alt {
+      background: transparent;
     }
 
     /* Subtle autumn corner leaves */
@@ -740,6 +755,20 @@
       padding: 5.5rem 1.5rem 5rem;
       position: relative;
       overflow: hidden;
+    }
+
+    /* Sezione con foto di sfondo. Velo panna a fascia: piu' leggero in alto
+       e in basso (foto ben visibile), piu' denso al centro per proteggere
+       la leggibilita' di testi e pulsanti. */
+    .rsvp-section.bg-rsvp {
+      background:
+        linear-gradient(to bottom,
+          rgba(250, 245, 235, 0.62) 0%,
+          rgba(250, 245, 235, 0.66) 25%,
+          rgba(250, 245, 235, 0.90) 50%,
+          rgba(250, 245, 235, 0.72) 72%,
+          rgba(250, 245, 235, 0.66) 100%),
+        url('img/rsvp.webp') center 50% / cover no-repeat;
     }
 
     .rsvp-inner {
@@ -1184,6 +1213,21 @@
         margin: 1.6rem auto .8rem;
       }
     }
+
+    /* ── Ottimizzazione foto di sfondo su telefono ──
+       Su schermo verticale il ritaglio "cover" e' piu' stretto: riposiziono
+       le foto per tenere i soggetti ben inquadrati. */
+    @media (max-width: 560px) {
+      /* Ricevimento: fa emergere il borgo/villa dietro al titolo */
+      .photo-ricevimento {
+        background-position: center 15%;
+      }
+
+      /* Conferma: centra la coppia (lui a sx, lei a dx) sul verticale */
+      .rsvp-section.bg-rsvp {
+        background-position: 30% 50%;
+      }
+    }
   </style>
 </head>
 
@@ -1314,6 +1358,9 @@
     </div>
   </section>
 
+  <!-- ══════════ BLOCCO RICEVIMENTO — foto continua dietro info + mappa ══════════ -->
+  <div class="photo-ricevimento">
+
   <!-- ══════════ SEZIONE 4 — LOCATION FESTA ══════════ -->
   <section class="info-section alt" aria-labelledby="festa-title">
     <span class="corner-leaf tl" aria-hidden="true">🍂</span>
@@ -1361,6 +1408,9 @@
     </div>
   </section>
 
+  </div>
+  <!-- ══════════ fine BLOCCO RICEVIMENTO ══════════ -->
+
   <!-- ══════════ REGALO / IBAN ══════════ -->
   <section class="gift-section" aria-labelledby="gift-title">
     <div class="gift-inner reveal">
@@ -1384,7 +1434,7 @@
   </section>
 
   <!-- ══════════ SEZIONE CONFERMA / RSVP ══════════ -->
-  <section class="rsvp-section" aria-labelledby="rsvp-title">
+  <section class="rsvp-section bg-rsvp" aria-labelledby="rsvp-title">
     <span class="corner-leaf tl" aria-hidden="true">🍂</span>
     <span class="corner-leaf tr" aria-hidden="true">🍁</span>
     <span class="corner-leaf bl" aria-hidden="true">🍁</span>
