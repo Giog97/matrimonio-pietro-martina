@@ -63,9 +63,7 @@
       font-family: 'Diphylleia', Georgia, serif;
       background: var(--warm-white);
       color: var(--text-dark);
-      /* clip (non hidden): evita lo scroll orizzontale senza rompere gli
-         elementi "position: sticky" come lo sfondo della Conferma */
-      overflow-x: clip;
+      overflow-x: hidden;
     }
 
     /* ─── Brittany script class ─── */
@@ -408,8 +406,8 @@
     .photo-ricevimento {
       position: relative;
       background:
-        linear-gradient(rgba(250, 245, 235, 0.84), rgba(250, 245, 235, 0.84)),
-        url('img/mani.webp') center center / cover no-repeat;
+        linear-gradient(rgba(250, 245, 235, 0.84), rgba(250, 245, 235, 0.25)),
+        url('img/ricevimento.webp') center 26% / cover no-repeat;
     }
 
     .photo-ricevimento .info-section.alt,
@@ -765,19 +763,12 @@
     .rsvp-section.bg-rsvp {
       background:
         linear-gradient(to bottom,
-          rgba(250, 245, 235, 0.62) 0%,
-          rgba(250, 245, 235, 0.66) 25%,
-          rgba(250, 245, 235, 0.90) 50%,
-          rgba(250, 245, 235, 0.72) 72%,
-          rgba(250, 245, 235, 0.66) 100%),
+          rgba(250, 245, 235, 0.35) 0%,
+          rgba(250, 245, 235, 0.50) 25%,
+          rgba(250, 245, 235, 0.75) 50%,
+          rgba(250, 245, 235, 0.60) 72%,
+          rgba(250, 245, 235, 0.35) 100%),
         url('img/rsvp.webp') center 50% / cover no-repeat;
-    }
-
-    /* Layer di sfondo "sticky" della Conferma: attivo SOLO su telefono
-       (vedi media query in fondo). Su desktop resta nascosto e vale lo
-       sfondo "cover" della sezione qui sopra. */
-    .rsvp-sticky {
-      display: none;
     }
 
     .rsvp-inner {
@@ -1112,10 +1103,6 @@
       background: var(--brown-dark);
       padding: 3rem 1.5rem;
       text-align: center;
-      /* sopra lo sfondo "sticky" della Conferma, che a fine scroll potrebbe
-         sbordare di qualche pixel su questa area */
-      position: relative;
-      z-index: 2;
     }
 
     .footer-script {
@@ -1231,34 +1218,15 @@
        Su schermo verticale il ritaglio "cover" e' piu' stretto: riposiziono
        le foto per tenere i soggetti ben inquadrati. */
     @media (max-width: 560px) {
-      /* Conferma su telefono: la foto e' un layer "sticky" (incollato allo
-         schermo) DIETRO al contenuto, che le scorre sopra. Cosi' la foto e'
-         sempre ben visibile e non riscala mai quando il form si apre. */
+
+      /* Ricevimento: fa emergere il borgo/villa dietro al titolo */
+      .photo-ricevimento {
+        background-position: center 15%;
+      }
+
+      /* Conferma: centra la coppia (lui a sx, lei a dx) sul verticale */
       .rsvp-section.bg-rsvp {
-        background: var(--section-a);
-        overflow: visible;   /* necessario affinche' lo sticky "prenda" */
-        min-height: 100vh;   /* evita che la foto sbordi sotto la sezione */
-      }
-
-      .rsvp-section.bg-rsvp .section-inner,
-      .rsvp-section.bg-rsvp .rsvp-inner {
-        position: relative;
-        z-index: 1;          /* il contenuto sta sopra la foto */
-      }
-
-      .rsvp-sticky {
-        display: block;
-        position: sticky;
-        top: 0;
-        height: 100vh;
-        margin-bottom: -100vh;  /* non occupa spazio: il contenuto ci scorre sopra */
-        z-index: 0;
-        background:
-          linear-gradient(to bottom,
-            rgba(250, 245, 235, 0.72) 0%,
-            rgba(250, 245, 235, 0.55) 35%,
-            rgba(250, 245, 235, 0.50) 100%),
-          url('img/rsvp.webp') 30% center / cover no-repeat;
+        background-position: 30% 50%;
       }
     }
   </style>
@@ -1394,52 +1362,54 @@
   <!-- ══════════ BLOCCO RICEVIMENTO — foto continua dietro info + mappa ══════════ -->
   <div class="photo-ricevimento">
 
-  <!-- ══════════ SEZIONE 4 — LOCATION FESTA ══════════ -->
-  <section class="info-section alt" aria-labelledby="festa-title">
-    <span class="corner-leaf tl" aria-hidden="true">🍂</span>
-    <span class="corner-leaf tr" aria-hidden="true">🍁</span>
-    <span class="corner-leaf bl" aria-hidden="true">🍁</span>
-    <span class="corner-leaf br" aria-hidden="true">🍂</span>
+    <!-- ══════════ SEZIONE 4 — LOCATION FESTA ══════════ -->
+    <section class="info-section alt" aria-labelledby="festa-title">
+      <span class="corner-leaf tl" aria-hidden="true">🍂</span>
+      <span class="corner-leaf tr" aria-hidden="true">🍁</span>
+      <span class="corner-leaf bl" aria-hidden="true">🍁</span>
+      <span class="corner-leaf br" aria-hidden="true">🍂</span>
 
-    <div class="section-inner reveal">
-      <h2 class="section-title" id="festa-title">Il Ricevimento</h2>
-      <p class="section-sub">Villa il Petriccio</p>
-      <div class="gold-rule"></div>
+      <div class="section-inner reveal">
+        <h2 class="section-title" id="festa-title">Il Ricevimento</h2>
+        <p class="section-sub">Villa il Petriccio</p>
+        <div class="gold-rule"></div>
 
-      <div class="info-grid">
-        <div class="info-col">
-          <span class="info-icon" aria-hidden="true">🥂</span>
-          <p class="info-eyebrow">Dove</p>
-          <p class="info-main">
-            Via Paterno, 42/A<br>
-            50025 Montespertoli (FI)
-          </p>
-        </div>
-        <div class="info-col">
-          <span class="info-icon" aria-hidden="true">🕕</span>
-          <p class="info-eyebrow">Arrivo ospiti</p>
-          <span class="info-time">17:30</span>
-          <p class="info-time-label">24 Ottobre 2026</p>
+        <div class="info-grid">
+          <div class="info-col">
+            <span class="info-icon" aria-hidden="true">🥂</span>
+            <p class="info-eyebrow">Dove</p>
+            <p class="info-main">
+              Via Paterno, 42/A<br>
+              50025 Montespertoli (FI)
+            </p>
+          </div>
+          <div class="info-col">
+            <span class="info-icon" aria-hidden="true">🕕</span>
+            <p class="info-eyebrow">Arrivo ospiti</p>
+            <span class="info-time">17:30</span>
+            <p class="info-time-label">24 Ottobre 2026</p>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ══════════ SEZIONE 5 — MAPPA LOCATION ══════════ -->
-  <section class="map-section alt" aria-label="Mappa location">
-    <div class="map-frame-wrap reveal">
-      <div class="map-frame-border">
-        <iframe title="Mappa Location Ricevimento" loading="lazy" allowfullscreen
-          referrerpolicy="no-referrer-when-downgrade"
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2886.3121902760545!2d10.989321476531062!3d43.662476651830374!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x132a42729dc3fc39%3A0x2c2d7d008a7b4e3a!2sVilla%20Il%20Petriccio!5e0!3m2!1sit!2sit!4v1780497131524!5m2!1sit!2sit" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
-           </iframe>
+    <!-- ══════════ SEZIONE 5 — MAPPA LOCATION ══════════ -->
+    <section class="map-section alt" aria-label="Mappa location">
+      <div class="map-frame-wrap reveal">
+        <div class="map-frame-border">
+          <iframe title="Mappa Location Ricevimento" loading="lazy" allowfullscreen
+            referrerpolicy="no-referrer-when-downgrade"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2886.3121902760545!2d10.989321476531062!3d43.662476651830374!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x132a42729dc3fc39%3A0x2c2d7d008a7b4e3a!2sVilla%20Il%20Petriccio!5e0!3m2!1sit!2sit!4v1780497131524!5m2!1sit!2sit"
+            width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+        <a class="map-open-link" href="https://maps.google.com/?q=Via+Paterno+42A+50025+Montespertoli+FI"
+          target="_blank" rel="noopener">
+          ↗ Apri in Google Maps
+        </a>
       </div>
-      <a class="map-open-link" href="https://maps.google.com/?q=Via+Paterno+42A+50025+Montespertoli+FI" target="_blank"
-        rel="noopener">
-        ↗ Apri in Google Maps
-      </a>
-    </div>
-  </section>
+    </section>
 
   </div>
   <!-- ══════════ fine BLOCCO RICEVIMENTO ══════════ -->
@@ -1468,73 +1438,72 @@
 
   <!-- ══════════ SEZIONE CONFERMA / RSVP ══════════ -->
   <section class="rsvp-section bg-rsvp" aria-labelledby="rsvp-title">
-    <div class="rsvp-sticky" aria-hidden="true"></div>
     <span class="corner-leaf tl" aria-hidden="true">🍂</span>
     <span class="corner-leaf tr" aria-hidden="true">🍁</span>
     <span class="corner-leaf bl" aria-hidden="true">🍁</span>
     <span class="corner-leaf br" aria-hidden="true">🍂</span>
 
-<div class="section-inner reveal">
-    <h2 class="section-title" id="rsvp-title">Conferma</h2>
-    
-    <!-- Abbiamo diviso il testo in due righe separate usando i div -->
-    <div class="section-sub">Per aiutarci nell'organizzazione ti chiediamo di confermare la tua presenza</div>
-    <div class="section-sub"><strong>entro il 1 settembre</strong></div>
-    
-    <div class="gold-rule"></div>
-</div>
+    <div class="section-inner reveal">
+      <h2 class="section-title" id="rsvp-title">Conferma</h2>
 
-      <div class="rsvp-inner">
-        <p class="rsvp-intro">
-         Scegli una delle due opzioni qui sotto:
-        </p>
+      <!-- Abbiamo diviso il testo in due righe separate usando i div -->
+      <div class="section-sub">Per aiutarci nell'organizzazione ti chiediamo di confermare la tua presenza</div>
+      <div class="section-sub"><strong>entro il 1 settembre</strong></div>
 
-        <div class="rsvp-buttons">
-          <button type="button" class="rsvp-btn yes" id="rsvpYes" aria-expanded="false">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"
-              stroke-linejoin="round" aria-hidden="true">
-              <polyline points="20 6 9 17 4 12"></polyline>
-            </svg>
-            Ci sarò
-          </button>
-          <button type="button" class="rsvp-btn no" id="rsvpNo" aria-expanded="false">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"
-              stroke-linejoin="round" aria-hidden="true">
-              <line x1="18" y1="6" x2="6" y2="18"></line>
-              <line x1="6" y1="6" x2="18" y2="18"></line>
-            </svg>
-            Non potrò esserci
-          </button>
-        </div>
+      <div class="gold-rule"></div>
+    </div>
 
-        <div class="rsvp-form-wrap" id="rsvpFormWrap" aria-hidden="true">
-          <span class="rsvp-mode-label" id="rsvpModeLabel">I tuoi dati</span>
-          <p class="rsvp-mode-sub" id="rsvpModeSub">Compila i campi qui sotto</p>
+    <div class="rsvp-inner">
+      <p class="rsvp-intro">
+        Scegli una delle due opzioni qui sotto:
+      </p>
 
-          <form id="rsvpForm" novalidate>
-            <!-- Honeypot anti-spam (nascosto agli umani, riempito solo dai bot) -->
-            <input type="text" name="botcheck" id="rsvpBotcheck" tabindex="-1" autocomplete="off"
-              style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;" aria-hidden="true" />
-
-            <div id="guestList"></div>
-
-            <button type="button" class="add-guest-btn" id="addGuestBtn">+ Aggiungi partecipante</button>
-
-            <div>
-              <button type="submit" class="submit-btn" id="submitBtn">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                  stroke-linejoin="round" aria-hidden="true">
-                  <line x1="22" y1="2" x2="11" y2="13"></line>
-                  <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                </svg>
-                Invia risposta
-              </button>
-            </div>
-
-            <p class="rsvp-status" id="rsvpStatus" role="status" aria-live="polite"></p>
-          </form>
-        </div>
+      <div class="rsvp-buttons">
+        <button type="button" class="rsvp-btn yes" id="rsvpYes" aria-expanded="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"
+            stroke-linejoin="round" aria-hidden="true">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+          Ci sarò
+        </button>
+        <button type="button" class="rsvp-btn no" id="rsvpNo" aria-expanded="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"
+            stroke-linejoin="round" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+          Non potrò esserci
+        </button>
       </div>
+
+      <div class="rsvp-form-wrap" id="rsvpFormWrap" aria-hidden="true">
+        <span class="rsvp-mode-label" id="rsvpModeLabel">I tuoi dati</span>
+        <p class="rsvp-mode-sub" id="rsvpModeSub">Compila i campi qui sotto</p>
+
+        <form id="rsvpForm" novalidate>
+          <!-- Honeypot anti-spam (nascosto agli umani, riempito solo dai bot) -->
+          <input type="text" name="botcheck" id="rsvpBotcheck" tabindex="-1" autocomplete="off"
+            style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;" aria-hidden="true" />
+
+          <div id="guestList"></div>
+
+          <button type="button" class="add-guest-btn" id="addGuestBtn">+ Aggiungi partecipante</button>
+
+          <div>
+            <button type="submit" class="submit-btn" id="submitBtn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" aria-hidden="true">
+                <line x1="22" y1="2" x2="11" y2="13"></line>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+              </svg>
+              Invia risposta
+            </button>
+          </div>
+
+          <p class="rsvp-status" id="rsvpStatus" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </div>
     </div>
   </section>
 
