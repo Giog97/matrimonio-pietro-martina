@@ -777,6 +777,12 @@
       text-align: center;
     }
 
+    /* Testo introduttivo piu' scuro per leggibilita' sopra la foto */
+    .rsvp-section.bg-rsvp .section-sub {
+      color: var(--brown);
+      text-shadow: 0 1px 6px rgba(250, 245, 235, .6);
+    }
+
     .rsvp-intro {
       font-family: 'Diphylleia', serif;
       font-size: clamp(.95rem, 2.4vw, 1.1rem);
@@ -1033,8 +1039,8 @@
 
     .add-guest-btn {
       background: transparent;
-      border: 1.5px dashed rgba(200, 148, 58, .55);
-      color: var(--gold-dark);
+      border: 1.5px dashed var(--gold-dark);
+      color: var(--rust);
       font-family: 'Diphylleia', serif;
       font-size: .92rem;
       letter-spacing: .14em;
@@ -1047,9 +1053,9 @@
     }
 
     .add-guest-btn:hover {
-      background: rgba(200, 148, 58, .1);
-      border-color: var(--gold);
-      color: var(--rust);
+      background: rgba(200, 148, 58, .25);
+      border-color: var(--rust);
+      color: var(--rust-dark);
       transform: translateY(-2px);
     }
 
